@@ -30,7 +30,7 @@ public class Box {
     private Double batteryCapacity;
 
     @Enumerated(EnumType.STRING)
-    private EState state;
+    private BoxState state;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "box_item",

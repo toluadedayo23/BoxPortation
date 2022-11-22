@@ -1,6 +1,6 @@
 package com.boxportation.model;
 
-public enum EState {
+public enum BoxState {
     IDLE,
     LOADING,
     LOADED,

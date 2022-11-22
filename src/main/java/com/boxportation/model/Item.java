@@ -33,5 +33,6 @@ public class Item {
     @NotBlank(message = "Item code cannot be blank")
     @Pattern(regexp = "^[A-Z0-9_]+$")
     private String code;
-    
+
+    private ItemState status;
 }

@@ -1,2 +1,6 @@
-package com.boxportation.model;public interface ItemState {
+package com.boxportation.model;
+
+public enum ItemState {
+    LOADED,
+    UNLOADED
 }
