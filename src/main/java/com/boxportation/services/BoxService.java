@@ -9,7 +9,7 @@ public interface BoxService {
 
     void registerBox(BoxDto boxDto);
 
-    List<ItemsDto> loadBox(Long id);
+    List<ItemsDto> loadBox(String ref);
 
     List<ItemsDto> ListItemsInBox(String  ref);
 
