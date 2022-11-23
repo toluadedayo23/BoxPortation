@@ -27,6 +27,7 @@ public class Item {
     @DecimalMin("0.1")
     private Double weight;
 
+    @Column(unique = true)
     @NotBlank(message = "Item code cannot be blank")
     @Pattern(regexp = "^[A-Z0-9_]+$")
     private String code;

@@ -23,14 +23,17 @@ public class Box {
     @Size(max=20, message = "txref cannot be more than 20 charaters")
     private String txref;
 
-    @Range(max = 500, message = "weight cannot be more than 500gr")
-    private Double weightLimit;
+    @Transient
+    private Double weightLimit = 500.00;
 
     @Range(min = 0, max = 100, message = "Battery capacity ranges between 0 and 100")
     private Double batteryCapacity;
 
     @Enumerated(EnumType.STRING)
     private BoxState state;
+
+    @Range(max = 500, message = "weight cannot be more than 500gr")
+    private double weightCarried;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "box_item",
