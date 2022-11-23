@@ -1,7 +1,6 @@
 package com.boxportation.services;
 
-import com.boxportation.dto.BoxDto;
-import com.boxportation.dto.ItemsDto;
+import com.boxportation.dto.*;
 
 import java.util.List;
 
@@ -9,11 +8,11 @@ public interface BoxService {
 
     void registerBox(BoxDto boxDto);
 
-    List<ItemsDto> loadBox(String ref);
+    LoadedItemsResponse loadBox(LoadBoxDto loadBoxDto);
 
-    List<ItemsDto> ListItemsInBox(String  ref);
+    List<LoadedItemsResponse> ListItemsInBox(String  ref);
 
-    List<BoxDto> availableBoxesForLoading();
+    List<BoxResponses> availableBoxesForLoading();
 
     Double BatteryLevel(String ref);
 
