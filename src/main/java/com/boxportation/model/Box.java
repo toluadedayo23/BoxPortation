@@ -19,7 +19,7 @@ public class Box {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column(unique = true)
     @Size(max=20, message = "txref cannot be more than 20 charaters")
     private String txref;
 
@@ -32,7 +32,7 @@ public class Box {
     @Enumerated(EnumType.STRING)
     private BoxState state;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "box_item",
     joinColumns = @JoinColumn(name = "box_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "itemId"))
