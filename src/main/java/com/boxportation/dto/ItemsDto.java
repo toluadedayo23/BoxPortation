@@ -1,9 +1,12 @@
 package com.boxportation.dto;
 
+import lombok.Data;
+
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+@Data
 public class ItemsDto {
 
     @NotBlank(message = "Item name cannot be blank")
@@ -16,5 +19,6 @@ public class ItemsDto {
     @NotBlank(message = "Item code cannot be blank")
     @Pattern(regexp = "^[A-Z0-9_]+$")
     private String code;
+
 
 }
