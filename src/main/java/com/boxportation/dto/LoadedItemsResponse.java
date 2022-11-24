@@ -6,12 +6,12 @@ import lombok.Data;
 @Data
 public class LoadedItemsResponse {
 
-    private Long boxId;
+    private String boxTxref;
 
-    private String name;
+    private String itemName;
 
-    private Double weight;
+    private Double itemWeight;
 
-    private String status;
+    private String itemStatus;
 
 }

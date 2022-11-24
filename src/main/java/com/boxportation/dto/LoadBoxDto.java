@@ -10,10 +10,10 @@ import javax.validation.constraints.Size;
 public class LoadBoxDto {
 
 
-    @NotBlank
+    @NotBlank(message = "txref cannot be empty, null or blank")
     @Size(max=20, message = "txref cannot be more than 20 charaters")
     private String txref;
 
-    @Range(min = 1, message = "incorrect Item Id")
+    @Range(min = 1, message = "item ID cannot be lesser than 1")
     private Long itemId;
 }
