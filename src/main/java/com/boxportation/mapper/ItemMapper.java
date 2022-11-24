@@ -11,10 +11,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public abstract class ItemMapper {
 
-    @Mapping(target = "boxId", source = "box.txref")
-    @Mapping(target = "name", source = "item.name")
-    @Mapping(target = "weight", source = "item.weight")
-    @Mapping(target = "status", expression = "java(checkItemStatus(item))")
+    @Mapping(target = "boxTxref", source = "box.txref")
+    @Mapping(target = "itemName", source = "item.name")
+    @Mapping(target = "itemWeight", source = "item.weight")
+    @Mapping(target = "itemStatus", expression = "java(checkItemStatus(item))")
     public  abstract LoadedItemsResponse mapItemsToResponse(Box box, Item item);
 
 
