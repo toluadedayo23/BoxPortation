@@ -17,7 +17,7 @@ public class ItemsDto {
     private Double weight;
 
     @NotBlank(message = "Item code cannot be blank")
-    @Pattern(regexp = "^[A-Z0-9_]+$")
+    @Pattern(regexp = "^[A-Z0-9_]+$", message = "allowed only upper case letters, underscore and numbers")
     private String code;
 
 
