@@ -1,6 +1,9 @@
 package com.boxportation.services.Implemetations;
 
-import com.boxportation.dto.*;
+import com.boxportation.dto.BoxDto;
+import com.boxportation.dto.BoxResponses;
+import com.boxportation.dto.LoadBoxDto;
+import com.boxportation.dto.LoadedItemsResponse;
 import com.boxportation.exceptions.BoxException;
 import com.boxportation.exceptions.ItemException;
 import com.boxportation.mapper.BoxMapper;
@@ -14,9 +17,9 @@ import com.boxportation.repository.ItemRepository;
 import com.boxportation.services.BoxService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,8 +36,8 @@ public class BoxServiceImpl implements BoxService {
     @Override
     public void registerBox(BoxDto boxDto) {
 
-        if(boxRepository.existsByTxref(boxDto.getTxref())){
-            throw new BoxException("Box with txref already exists, please choose a new txref");
+        if (boxRepository.existsByTxref(boxDto.getTxref())) {
+            throw new BoxException("Box with Txref: " + boxDto.getTxref() + " already exists, please choose a new txref");
         }
         Box box = new Box();
         box.setTxref(boxDto.getTxref());
@@ -51,7 +54,7 @@ public class BoxServiceImpl implements BoxService {
         Box box = boxRepository.findByTxref(loadBoxDto.getTxref())
                 .orElseThrow(() -> new BoxException("Box", loadBoxDto.getTxref()));
 
-        if(box.getBatteryCapacity() < 25.0){
+        if (box.getBatteryCapacity() < 25.0) {
             box.setState(BoxState.IDLE);
             throw new BoxException("Box cannot be loaded, please recharge battery");
         }
@@ -61,16 +64,16 @@ public class BoxServiceImpl implements BoxService {
         Item item = itemRepository.findById(loadBoxDto.getItemId())
                 .orElseThrow(() -> new ItemException("Item", loadBoxDto.getItemId()));
 
-        if(item.getStatus() == ItemState.LOADED){
+        if (item.getStatus() == ItemState.LOADED) {
             throw new ItemException("Item with the ITEM ID: " + loadBoxDto.getItemId() + " already loaded");
         }
 
 
-        if(item.getWeight() > box.getWeightLimit()){
+        if (item.getWeight() > box.getWeightLimit()) {
             throw new BoxException("Item: " + item.getName() + " is over the weight limit for Box with the TXREF: " + box.getTxref());
         }
 
-        if(item.getWeight() > box.getWeightLimit()- box.getWeightCarried()){
+        if (item.getWeight() > box.getWeightLimit() - box.getWeightCarried()) {
             throw new BoxException("Item: " + item.getName() + " weight cannot fit, please find another box");
         }
 
@@ -101,8 +104,7 @@ public class BoxServiceImpl implements BoxService {
 
     @Override
     public List<BoxResponses> availableBoxesForLoading() {
-        List<Box> boxes = boxRepository.getBoxesByStateContainsAndBatteryCapacityGreaterThanEqual(
-                BoxState.IDLE.toString(), 25.0);
+        List<Box> boxes = boxRepository.getBoxesByBatteryCapacityGreaterThanEqualAndStateEquals();
 
         List<BoxResponses> boxResponsesList = boxes.stream()
                 .map(boxMapper::mapBoxToResponse)

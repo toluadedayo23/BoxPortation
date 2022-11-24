@@ -1,6 +1,7 @@
 package com.boxportation.services.Implemetations;
 
 import com.boxportation.dto.ItemsDto;
+import com.boxportation.exceptions.BoxException;
 import com.boxportation.exceptions.ItemException;
 import com.boxportation.mapper.ItemMapper;
 import com.boxportation.model.Item;
@@ -9,8 +10,9 @@ import com.boxportation.repository.ItemRepository;
 import com.boxportation.services.ItemServices;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,9 @@ public class ItemServiceImpl implements ItemServices {
     @Transactional
     @Override
     public void registerItem(ItemsDto itemsDto) {
+        if(itemRepository.existsByCode(itemsDto.getCode())){
+            throw new ItemException("Item with Code name: " + itemsDto.getCode()+ " already exists, please choose a new code");
+        }
         Item newItem = new Item();
         newItem.setName(itemsDto.getName());
         newItem.setWeight(itemsDto.getWeight());
